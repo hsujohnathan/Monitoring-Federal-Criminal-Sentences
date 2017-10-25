@@ -12,3 +12,6 @@ discretion as we only observe the outcome of the case and the guideline values. 
 that I should consider - is the setencing on the lower end of the guidelines or the opposite (upward v.
 downward departure/mandatory minimmum or no, 852 enhancement)? Are blacks given a higher sentence at
 a higher frequency? Is that changing over the years?
+
+Data can be downloaded at https://www.icpsr.umich.edu/icpsrweb/ICPSR/series/00083 - however, you will need to convert
+them from ASCII for the data prior to 2005.
