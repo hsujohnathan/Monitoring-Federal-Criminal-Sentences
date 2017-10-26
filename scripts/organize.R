@@ -2,16 +2,16 @@
 library(haven)
 
 # Read existing csv files in to clean. 
-data_95_to_96 <- read.csv("clean_data/95-96.csv")
-data_96_to_97 <- read.csv("clean_data/96-97.csv")
-data_97_to_98 <- read.csv("clean_data/97-98.csv")
+data_95_96 <- read.csv("clean_data/95-96.csv")
+data_96_97 <- read.csv("clean_data/96-97.csv")
+data_97_98 <- read.csv("clean_data/97-98.csv")
 data_1999 <- read.csv("clean_data/1999.csv")
 data_2000 <- read.csv("clean_data/2000.csv")
 data_2001 <- read.csv("clean_data/2001.csv")
 data_2002 <- read.csv("clean_data/2002.csv")
-data_2003 <- read_sav("clean_data/2003.sav")
-data_2004 <- read_sav("clean_data/2004.sav")
-data_2005 <- read_sav("clean_data/2005.sav")
+data_2003 <- read.csv("clean_data/2003.csv")
+data_2004 <- read.csv("clean_data/2004.csv")
+data_2005 <- read.csv("clean_data/2005.csv")
 data_2006 <- read.csv("clean_data/2006.csv") 
 data_2007 <- read.csv("clean_data/2007.csv") 
 data_2008 <- read.csv("clean_data/2008.csv") 
@@ -23,5 +23,27 @@ data_2013 <- read.csv("clean_data/2013.csv")
 data_2014 <- read.csv("clean_data/2014.csv") 
 data_2015 <- read.csv("clean_data/2015.csv") 
 
-# continue to merge_data.r
+# add years to data
+data_95_96$YEAR <- 1996
+data_96_97$YEAR <- 1997
+data_97_98$YEAR <- 1998
+data_1999$YEAR <- 1999
+data_2000$YEAR <- 2000
+data_2001$YEAR <- 2001
+data_2002$YEAR <- 2002
+data_2003$YEAR <- 2003
+data_2004$YEAR <- 2004
+data_2005$YEAR <- 2005
+data_2006$YEAR <- 2006
+data_2007$YEAR <- 2007
+data_2008$YEAR <- 2008
+data_2009$YEAR <- 2009
+data_2010$YEAR <- 2010
+data_2011$YEAR <- 2011
+data_2012$YEAR <- 2012
+data_2013$YEAR <- 2013
+data_2014$YEAR <- 2014
+data_2015$YEAR <- 2015
+
+# continue to merge_data.r for data selection 
   
