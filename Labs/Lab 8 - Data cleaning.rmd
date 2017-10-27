@@ -1,0 +1,128 @@
+---
+title: "Lab 8"
+author: "Johnathan Hsu"
+date: "October 27, 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Using your own dataset (which may include more than one table) carry out the following data cleaning steps. Knit together the PDF document and commit both the Lab 8 RMD file and the PDF document to Git. Push the changes to GitHub so both documents are visible in your public GitHub repository. 
+
+**Before you begin: as many of you have large datasets, you're going to want to select only the variables you're interested in utilizing for this project (ideally no more than twenty columns but perhaps much smaller) so you don't have R Studio's memory working on the entire dataset. The example code provided below can be modified to allow you to subset your data to only the variables you wish to use. First, read in your complete dataset and save it as** `data`. **Then, add the names of the variables you wish to use for your poster project to the** `select` **function, separated by commas. Run the two lines of code to save this new, smaller version of your data to** `data_subset`. **Use this smaller dataset to complete the rest of the lab**
+
+```{r}
+# Adding dplyr to the library for select function
+library(dplyr)
+
+# loading the csv file.
+data_95_96 <- read.csv("clean_data/initial_data/95-96.csv")
+
+# add year to the data in case I want to merge later
+data_95_96$YEAR <- 1996
+# Selecting the variables that I'm using 
+
+data_subset_95_96 <- data_95_96 %>%
+  select(MONRACE, YEAR, MONSEX, EDUCATN, AGE, STATMIN, STATMAX, DISPOSIT, TOTPRISN, XFOLSOR, XCRHISSR, DISTRICT, MONCIRC)
+```
+1. To get a feel for its structure, look at the class, dimensions, column names, structure, and basic summary statistics of your data.
+
+I will test the 1995-1996 data, and uniformize the variables to factors as needed
+
+```{r}
+class(data_subset_95_96)
+dim(data_subset_95_96)
+colnames(data_subset_95_96)
+str(data_subset_95_96)
+summary(data_subset_95_96)
+```
+
+
+2. Preview the first and last 15 rows of your data. Is you dataset tidy? If not, what principles of tidy data does it seem to be violating?
+
+```{r}
+# Calling head and tail, the data appears to be tidy
+head(data_subset_95_96, 15)
+tail(data_subset_95_96, 15)
+```
+
+3. Create a histogram for at least two variables you plan to focus on for your study. Describe what these plots show you about these variables. 
+
+```{r}
+# Calling histogram for number of sentences per district for the data from 1995-1996.
+hist(data_subset_95_96$DISTRICT, main = "District Sentenced", xlab = "District")
+
+# Calling historgram for number for the length of the sentence. Note that because the letters are 
+# currently factors (e.g. less than 1 day of imprisonment), I will be switching them from factors
+# to numeric, and excluding these observations (hence the "NAs introduced by coercion warning).
+
+data_subset_95_96$TOTPRISN <- as.numeric(paste(data_subset_95_96$TOTPRISN))
+hist(data_subset_95_96$TOTPRISN, main = "Total Prison Sentenced", xlab = "Months")
+```
+
+
+4. Create at least one bivariate plot showing the relationship between two variables of interest. What does/do the(se) plot(s) tell you about the association between these two variables?
+
+```{r}
+library(ggplot2)
+
+data_subset_95_96$XFOLSOR <- as.numeric(paste(data_subset_95_96$XFOLSOR))
+plot(y = data_subset_95_96$TOTPRISN, x = data_subset_95_96$XFOLSOR, xlab = "Final Offense Level", ylab = "Total Prison Time Ordered", main = NA)
+```
+
+5. Load the `tidyr` package. Do all of your columns correspond to variables? Do any columns represent multiple variables? If your answer is yes to either question, carry out the appropriate `tidyr` function (`gather()` or `spread()` respectively) to tidy your data. 
+# Not applicable.
+
+My data columns appear to be fine.
+```{r}
+install.packages("tidyr", repos = "http://cran.us.r-project.org")
+library(tidyr)
+```
+
+6. Do any columns need to be separated into two or more? Do any columns need to be combined into one? If so, carry out the appropriate the appropriate `tidyr` function (`separate()` or `unite()` respectively) to tidy your data.  
+
+Not applicable.
+
+**At this stage each row in your data should represent one observation, each column should be a variable, and each table should be observational unit.** 
+
+7. What is the class of each of the variables in your analysis? Are these classes appropriate for the type of measurement they purport to capture? Explain your reasoning. 
+
+This is an issue with my dataset. Currently, a lot of these variables are in factors (because there are special cases). I will be introducing NAs through coersion. 
+
+8. Do any of your variables need to be coerced into a different data type? If so, carry out the appropriate coercion methods below. (This includes transformation of any date objects using the `lubridate` package)
+
+Nope.
+
+
+9. Are there any strings you need to manipulate for your analysis? If so, use the appropriate function from the [`stringr`](https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html) package. 
+
+Nope.
+
+
+10. Do you have any missing values in your dataset? How many and how are they coded? **Be sure to look out for specific codebook values for missing values (i.e. `-1` for `NA`) as well as empty strings or other software-specific values for `NA`.** Don't worry about removing NAs yet - we'll tackle this question later once discern whether they're random or systematically distributed. 
+
+These are different every year. There are a bunch of NAs in the dataset though. 
+
+```{r}
+summary(data_subset_95_96)
+```
+
+
+11. Are there any special values in your dataset? If so, what are they and how do you think they got there? *The presence of special values is less likely if you haven't performed any data manipulation yet so you should remember to return to this step each time you carry out a mathematical transformation of any values in your dataset.*
+
+# There are some years where specific values such as time served etc. which I converted them to NAs. 
+
+
+12. Create a boxplot of your data (you can create an individual boxplot for each variable if there are too many variables in your dataset to meaningfully visualize them all in one plot). Are there any outliers? If so, what are they and to which variable do they correspond? Do any of these outliers seem like obvious errors? If so, why? 
+
+```{r}
+library(ggplot2)
+
+ggplot(data_subset_95_96, aes(x = MONRACE, y = TOTPRISN, fill = "red")) + labs(x = "Race", y = "Prison Time") + ggtitle("Prison Time and Race in 1995-1996 Federal Court") + geom_boxplot()
+```
+
+13. For any outliers and/or obvious errors, what do you think is the best way to handle them (i.e. remove them entirely, run analyses including and excluding them and compare the results, manually change them to an appropriate measure of center, or something else?). 
+
+I have chosen to exclude this completely because they would mess up my model if I code them to - say -1. 
+
+
