@@ -2,7 +2,9 @@
 title: "Lab 9 - Data Transformation"
 author: "Johnathan Hsu"
 date: "November 3rd, 2017"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 1. In addition to simply naming variable names in select you can also use `:` to select a range of variables and `-` to exclude some variables, similar to indexing a `data.frame` with square brackets. You can use both variable's names as well as integer indexes.
@@ -15,7 +17,7 @@ output: html_document
 # setting directory
 setwd("~/monitoring-federal-criminal-sentences")
 
-# installing package
+# package
 library(dplyr)
 
 # read data
