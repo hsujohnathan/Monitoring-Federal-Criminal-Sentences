@@ -76,82 +76,70 @@ data_2015 <- read.csv("clean_data/selected_data/2015.csv")
     
 # 2003
   data_2003$MONRACE <- as.factor(data_2003$MONRACE)
-  data_2003$MONSEX <- as.factor(data_2003$MONSEX)
   data_2003$EDUCATN <- as.factor(data_2003$EDUCATN)
   data_2003$DISPOSIT <- as.factor(data_2003$DISPOSIT)
   
 # 2004
   data_2004$MONRACE <- as.factor(data_2004$MONRACE)
-  data_2004$MONSEX <- as.factor(data_2004$MONSEX)
   data_2004$EDUCATN <- as.factor(data_2004$EDUCATN)
   data_2004$DISPOSIT <- as.factor(data_2004$DISPOSIT)  
   
 # 2005
   data_2005$MONRACE <- as.factor(data_2005$MONRACE)
-  data_2005$MONSEX <- as.factor(data_2005$MONSEX)
   data_2005$EDUCATN <- as.factor(data_2005$EDUCATN)
   data_2005$DISPOSIT <- as.factor(data_2005$DISPOSIT)  
   
 # 2006
   data_2006$MONRACE <- as.factor(data_2006$MONRACE)
-  data_2006$MONSEX <- as.factor(data_2006$MONSEX)
   data_2006$EDUCATN <- as.factor(data_2006$EDUCATN)
   data_2006$DISPOSIT <- as.factor(data_2006$DISPOSIT)  
 
 # 2007
   data_2007$MONRACE <- as.factor(data_2007$MONRACE)
-  data_2007$MONSEX <- as.factor(data_2007$MONSEX)
   data_2007$EDUCATN <- as.factor(data_2007$EDUCATN)
   data_2007$DISPOSIT <- as.factor(data_2007$DISPOSIT) 
   
 # 2008
   data_2008$MONRACE <- as.factor(data_2008$MONRACE)
-  data_2008$MONSEX <- as.factor(data_2008$MONSEX)
   data_2008$EDUCATN <- as.factor(data_2008$EDUCATN)
   data_2008$DISPOSIT <- as.factor(data_2008$DISPOSIT) 
   
 # 2009
   data_2009$MONRACE <- as.factor(data_2009$MONRACE)
-  data_2009$MONSEX <- as.factor(data_2009$MONSEX)
   data_2009$EDUCATN <- as.factor(data_2009$EDUCATN)
   data_2009$DISPOSIT <- as.factor(data_2009$DISPOSIT) 
   
 # 2010
   data_2010$MONRACE <- as.factor(data_2010$MONRACE)
-  data_2010$MONSEX <- as.factor(data_2010$MONSEX)
   data_2010$EDUCATN <- as.factor(data_2010$EDUCATN)
   data_2010$DISPOSIT <- as.factor(data_2010$DISPOSIT) 
 
 # 2011
   data_2011$MONRACE <- as.factor(data_2011$MONRACE)
-  data_2011$MONSEX <- as.factor(data_2011$MONSEX)
   data_2011$EDUCATN <- as.factor(data_2011$EDUCATN)
   data_2011$DISPOSIT <- as.factor(data_2011$DISPOSIT) 
 
 # 2012
   data_2012$MONRACE <- as.factor(data_2012$MONRACE)
-  data_2012$MONSEX <- as.factor(data_2012$MONSEX)
   data_2012$EDUCATN <- as.factor(data_2012$EDUCATN)
   data_2012$DISPOSIT <- as.factor(data_2012$DISPOSIT) 
   
 # 2013
   data_2013$MONRACE <- as.factor(data_2013$MONRACE)
-  data_2013$MONSEX <- as.factor(data_2013$MONSEX)
   data_2013$EDUCATN <- as.factor(data_2013$EDUCATN)
   data_2013$DISPOSIT <- as.factor(data_2013$DISPOSIT) 
   
 # 2014
   data_2014$MONRACE <- as.factor(data_2014$MONRACE)
-  data_2014$MONSEX <- as.factor(data_2014$MONSEX)
   data_2014$EDUCATN <- as.factor(data_2014$EDUCATN)
   data_2014$DISPOSIT <- as.factor(data_2014$DISPOSIT) 
   
 # 2015
   data_2015$MONRACE <- as.factor(data_2015$MONRACE)
-  data_2015$MONSEX <- as.factor(data_2015$MONSEX)
   data_2015$EDUCATN <- as.factor(data_2015$EDUCATN)
   data_2015$DISPOSIT <- as.factor(data_2015$DISPOSIT) 
 
+# car package and '%>%'
 # Cleaning up race variable - this section does a lot of releveling and changes missing/indeterminable to NA. 
 
 data_95_96$MONRACE[data_95_96$MONRACE == "Missing or Indeterminable"] <- NA
@@ -289,17 +277,329 @@ levels(data_2015$MONRACE)
 data_2015$MONRACE <- as.numeric(data_2015$MONRACE)
 
 # cleans up MONSEX variable
-levels(data_95_96$MONSEX)
+data_95_96$MONSEX <- as.numeric(data_95_96$MONSEX)
+data_95_96$MONSEX[data_95_96$MONSEX == 2] <- 0
+data_95_96$MONSEX[data_95_96$MONSEX == 3] <- NA
+unique(data_95_96$MONSEX)
 
-levels(data_96_97$MONSEX)
+data_96_97$MONSEX <- as.numeric(data_96_97$MONSEX)
+data_96_97$MONSEX[data_96_97$MONSEX == 2] <- 0
+data_96_97$MONSEX[data_96_97$MONSEX == 3] <- NA
+unique(data_96_97$MONSEX)
 
-levels(data_97_98$MONSEX)
+data_97_98$MONSEX <- as.numeric(data_97_98$MONSEX)
+data_97_98$MONSEX[data_97_98$MONSEX == 0] <- 1
+data_97_98$MONSEX[data_97_98$MONSEX == 2] <- 0
+data_97_98$MONSEX[data_97_98$MONSEX == 3] <- NA
+unique(data_97_98$MONSEX)
+table(data_97_98$MONSEX)
 
-levels(data_1999$MONSEX)
+data_1999$MONSEX <- as.numeric(data_1999$MONSEX)
+data_1999$MONSEX[data_1999$MONSEX == 2] <- 0
 table(data_1999$MONSEX)
 
+data_2000$MONSEX <- as.numeric(data_2000$MONSEX)
+data_2000$MONSEX[data_2000$MONSEX == 2] <- 0
+table(data_2000$MONSEX)
 
-# merge data 
+data_2001$MONSEX <- as.numeric(data_2001$MONSEX)
+data_2001$MONSEX[data_2001$MONSEX == 2] <- 0
+table(data_2001$MONSEX)
+
+data_2002$MONSEX <- as.numeric(data_2002$MONSEX)
+data_2002$MONSEX[data_2002$MONSEX == 2] <- 0
+table(data_2002$MONSEX)
+
+# Collapsing education variable
+unique(data_95_96$EDUCATN)
+
+# 95-96
+data_95_96$EDUCATN <- fct_recode(data_95_96$EDUCATN,
+                                 "0" = "No schooling",
+                                 "1" = "Some elementary school",
+                                 "1" = "One yr school completed",
+                                 "1" = "Two yr school completed",
+                                 "1" = "Three yr school compl",
+                                 "1" = "Four yr school completed",
+                                 "1" = "Five yr school completed",
+                                 "1" = "Six yr school completed",
+                                 "1" = "Seven yr school compl",
+                                 "1" = "Eight yr school compl",
+                                 "1" = "Nine yr school completed",
+                                 "1" = "Ten yr school completed",
+                                 "1" = "Eleven yr school compl",
+                                 "1" = "Some high school",
+                                 "1" = "Middle schooljunior high",
+                                 "2" = "GED (General Education Diploma)",
+                                 "2" = "High school graduate",
+                                 "2" = "One year of collegefreshman",
+                                 "2" = "Two years of collegesophomore",
+                                 "2" = "Three years of collegejunior",
+                                 "2" = "Some college",
+                                 "3" = "Associate degree (AA)",
+                                 "2" = "Some trade or vocational school",
+                                 "3" = "Trade or vocational degree",
+                                 "3" = "Military training",
+                                 "4" = "College graduate",
+                                 "4" = "Some graduate school",
+                                 "5" = "Grad deg (Mst, JD, MD, PhD, etc)",
+                                 NULL = "Missing or Indeterminable")
+
+levels(data_95_96$EDUCATN)
+table(data_95_96$EDUCATN)
+
+# 96-97
+data_96_97$EDUCATN <- fct_recode(data_96_97$EDUCATN,
+                                 "0" = "No Schooling",
+                                 "1" = "Some Elementary School",
+                                 "1" = "One Yr School Completed",
+                                 "1" = "Two Yr School Completed",
+                                 "1" = "Three Yr School Completed",
+                                 "1" = "Four Yr School Completed",
+                                 "1" = "Five Yr School Completed",
+                                 "1" = "Six Yr School Completed",
+                                 "1" = "Seven Yr School Completed",
+                                 "1" = "Eight Yr School Completed",
+                                 "1" = "Nine Yr School Completed",
+                                 "1" = "Ten Yr School Completed",
+                                 "1" = "Eleven Yr School Completed",
+                                 "1" = "Some High School",
+                                 "1" = "Middle SchoolJunior High",
+                                 "2" = "GED (General Education Diploma)",
+                                 "2" = "High School Graduate",
+                                 "2" = "One Year Of CollegeFreshman",
+                                 "2" = "Two Years Of CollegeSophomore",
+                                 "2" = "Three Years Of CollegeJunior",
+                                 "2" = "Some Trade or Vocational School",
+                                 "2" = "Some College",
+                                 "3" = "Associate Degree (AA)",
+                                 "3" = "Trade Or Vocational Degree",
+                                 "3" = "Military Training",
+                                 "4" = "College Graduate",
+                                 "4" = "Some Graduate School",
+                                 "5" = "Grad Degree (Mst, JD, MD, PhD, etc)",
+                                 NULL = "Missing")
+levels(data_96_97$EDUCATN)
+
+# 97-98
+data_97_98$EDUCATN <- fct_recode(data_97_98$EDUCATN,
+                                 "0" = "No Schooling",
+                                 "1" = "Some Elementary School",
+                                 "1" = "One Yr School Completed",
+                                 "1" = "Two Yr School Completed",
+                                 "1" = "Three Yr School Completed",
+                                 "1" = "Four Yr School Completed",
+                                 "1" = "Five Yr School Completed",
+                                 "1" = "Six Yr School Completed",
+                                 "1" = "Seven Yr School Completed",
+                                 "1" = "Eight Yr School Completed",
+                                 "1" = "Nine Yr School Completed",
+                                 "1" = "Ten Yr School Completed",
+                                 "1" = "Eleven Yr School Completed",
+                                 "1" = "Some High School",
+                                 "1" = "Middle SchoolJunior High",
+                                 "2" = "GED (General Education Diploma)",
+                                 "2" = "High School Graduate",
+                                 "2" = "One Year Of CollegeFreshman",
+                                 "2" = "Two Years Of CollegeSophomore",
+                                 "2" = "Three Years Of CollegeJunior",
+                                 "2" = "Some Trade or Vocational School",
+                                 "2" = "Some College",
+                                 "3" = "Associate Degree (AA)",
+                                 "3" = "Trade Or Vocational Degree",
+                                 "3" = "Military Training",
+                                 "4" = "College Graduate",
+                                 "4" = "Some Graduate School",
+                                 "5" = "Grad Degree (Mst, JD, MD, PhD, etc)",
+                                 NULL = "Missing")
+levels(data_97_98$EDUCATN)
+
+# 1999
+data_1999$EDUCATN <- fct_recode(data_1999$EDUCATN,
+                                 "0" = "No Schooling",
+                                 "1" = "Some Elementary School",
+                                 "1" = "One Yr School Completed",
+                                 "1" = "Two Yr School Completed",
+                                 "1" = "Three Yr School Completed",
+                                 "1" = "Four Yr School Completed",
+                                 "1" = "Five Yr School Completed",
+                                 "1" = "Six Yr School Completed",
+                                 "1" = "Seven Yr School Completed",
+                                 "1" = "Eight Yr School Completed",
+                                 "1" = "Nine Yr School Completed",
+                                 "1" = "Ten Yr School Completed",
+                                 "1" = "Eleven Yr School Completed",
+                                 "1" = "Some High School",
+                                 "1" = "Middle SchoolJunior High",
+                                 "2" = "GED (General Education Diploma)",
+                                 "2" = "High School Graduate",
+                                 "2" = "One Year Of CollegeFreshman",
+                                 "2" = "Two Years Of CollegeSophomore",
+                                 "2" = "Three Years Of CollegeJunior",
+                                 "2" = "Some Trade or Vocational School",
+                                 "2" = "Some College",
+                                 "3" = "Associate Degree (AA)",
+                                 "3" = "Trade Or Vocational Degree",
+                                 "3" = "Military Training",
+                                 "4" = "College Graduate",
+                                 "4" = "Some Graduate School",
+                                 "5" = "Grad Degree (Mst, JD, MD, PhD, etc",
+                                 NULL = "Missing")
+levels(data_1999$EDUCATN)
+table(data_1999$EDUCATN)
+
+# 2000
+data_2000$EDUCATN <- fct_recode(data_2000$EDUCATN,
+                                "0" = "No schooling",
+                                "1" = "Some elementary schl",
+                                "1" = "One yr schl completd",
+                                "1" = "Two yr schl completd",
+                                "1" = "Three yr schl compld",
+                                "1" = "Four yr schl compltd",
+                                "1" = "Five yr schl compltd",
+                                "1" = "Six yr schl completd",
+                                "1" = "Seven yr schl compld",
+                                "1" = "Eight yr schl compld",
+                                "1" = "Nine yr schl compltd",
+                                "1" = "Ten yr schl completd",
+                                "1" = "Eleven yr schl compl",
+                                "1" = "Some high school",
+                                "1" = "Middle schl/jr high",
+                                "2" = "GED",
+                                "2" = "High school graduate",
+                                "2" = "One year of college",
+                                "2" = "Two years of college",
+                                "2" = "Three years college",
+                                "2" = "Some trade/vocationl",
+                                "2" = "Some college",
+                                "3" = "Associate degree",
+                                "3" = "Trade/vocational deg",
+                                "3" = "Military training",
+                                "4" = "College graduate",
+                                "4" = "Some graduate school",
+                                "5" = "Grad degree",
+                                NULL = "Missing")
+levels(data_2000$EDUCATN)
+
+#2001
+data_2001$EDUCATN <- fct_recode(data_2001$EDUCATN,
+                                "0" = "No Schooling",
+                                "1" = "Some Elementary School",
+                                "1" = "One Yr School Completed",
+                                "1" = "Two Yr School Completed",
+                                "1" = "Three Yr School Completed",
+                                "1" = "Four Yr School Completed",
+                                "1" = "Five Yr School Completed",
+                                "1" = "Six Yr School Completed",
+                                "1" = "Seven Yr School Completed",
+                                "1" = "Eight Yr School Completed",
+                                "1" = "Nine Yr School Completed",
+                                "1" = "Ten Yr School Completed",
+                                "1" = "Eleven Yr School Completed",
+                                "1" = "Some High School",
+                                "1" = "Middle SchoolJunior High",
+                                "2" = "GED (General Education Diploma)",
+                                "2" = "High School Graduate",
+                                "2" = "One Year Of CollegeFreshman",
+                                "2" = "Two Years Of CollegeSophomore",
+                                "2" = "Three Years Of CollegeJunior",
+                                "2" = "Some Trade or Vocational School",
+                                "2" = "Some College",
+                                "3" = "Associate Degree (AA)",
+                                "3" = "Trade Or Vocational Degree",
+                                "3" = "Military Training",
+                                "4" = "College Graduate",
+                                "4" = "Some Graduate School",
+                                "5" = "Grad Degree (Mst, JD, MD, PhD, etc",
+                                NULL = "Missing")
+levels(data_2001$EDUCATN)
+
+# 2002
+
+data_2002$EDUCATN <- fct_recode(data_2002$EDUCATN,
+                                "0" = "No Schooling",
+                                "1" = "Some Elementary School",
+                                "1" = "One Yr School Completed",
+                                "1" = "Two Yr School Completed",
+                                "1" = "Three Yr School Completed",
+                                "1" = "Four Yr School Completed",
+                                "1" = "Five Yr School Completed",
+                                "1" = "Six Yr School Completed",
+                                "1" = "Seven Yr School Completed",
+                                "1" = "Eight Yr School Completed",
+                                "1" = "Nine Yr School Completed",
+                                "1" = "Ten Yr School Completed",
+                                "1" = "Eleven Yr School Completed",
+                                "1" = "Some High School",
+                                "1" = "Middle SchoolJunior High",
+                                "2" = "GED (General Education Diploma)",
+                                "2" = "High School Graduate",
+                                "2" = "One Year Of CollegeFreshman",
+                                "2" = "Two Years Of CollegeSophomore",
+                                "2" = "Three Years Of CollegeJunior",
+                                "3" = "Some Trade or Vocational School",
+                                "2" = "Some College",
+                                "3" = "Associate Degree (AA)",
+                                "3" = "Trade Or Vocational Degree",
+                                "3" = "Military Training",
+                                "4" = "College Graduate",
+                                "4" = "Some Graduate School",
+                                "5" = "Grad Degree (Mst, JD, MD, PhD, etc",
+                                NULL = "Missing")
+table(data_2002$EDUCATN)
+
+# function for 2003 through 2015
+change_education = function(data) {
+  data$EDUCATN <- fct_recode(data$EDUCATN,
+                          "0" = "0",
+                          "1" = "1",
+                          "1" = "2",
+                          "1" = "3",
+                          "1" = "4",
+                          "1" = "5",
+                          "1" = "6",
+                          "1" = "7",
+                          "1" = "8",
+                          "1" = "9",
+                          "1" = "10",
+                          "1" = "11",
+                          "2" = "12",
+                          "2" = "13",
+                          "2" = "14",
+                          "2" = "15",
+                          "4" = "16",
+                          "2" = "21",
+                          "3" = "22",
+                          "3" = "23",
+                          "5" = "24",
+                          "1" = "31",
+                          "1" = "32",
+                          "2" = "33",
+                          "2" = "34",
+                          "4" = "35",
+                          "3" = "36",
+                          "1" = "37",
+                          NULL = "Missing")
+}
+
+data_2003$EDUCATN <- change_education(data_2003)
+data_2004$EDUCATN <- change_education(data_2004)
+data_2005$EDUCATN <- change_education(data_2005)
+data_2006$EDUCATN <- change_education(data_2006)
+data_2007$EDUCATN <- change_education(data_2007)
+data_2008$EDUCATN <- change_education(data_2008)
+data_2009$EDUCATN <- change_education(data_2009)
+data_2010$EDUCATN <- change_education(data_2010)
+data_2011$EDUCATN <- change_education(data_2011)
+data_2012$EDUCATN <- change_education(data_2012)
+data_2013$EDUCATN <- change_education(data_2013)
+data_2014$EDUCATN <- change_education(data_2014)
+data_2015$EDUCATN <- change_education(data_2015)
+table(data_2015$EDUCATN)
+
+
+
+# merge data by rbind
 
 data_bind <- rbind(data_95_96,
                    data_96_97,
@@ -323,21 +623,17 @@ data_bind <- rbind(data_95_96,
                    data_2015)
 
 unique(data_bind$MONRACE)
-data_bind$MONRACE <- as.numeric(data_bind$MONRACE)
+unique(data_bind$EDUCATN)
+data_bind$EDUCATN <- as.numeric(paste(data_bind$EDUCATN))
 plot(table(data_bind$MONRACE))
 
-# summary to check NAs
-summary(data_bind)
-
+# save binded data
 write.csv(data_bind, "clean_data/variable_data/binded_data.csv")
-
-ggplot(data_bind, aes(x = XFOLSOR, y = TOTPRISN)) + geom_smooth(method = "loess", size = 1.2)
-
 
 # model that you run
 # data_bind$TOTPRISN <- as.numeric(paste(data_bind$TOTPRISN))
-race.lm <- lm(TOTPRISN ~ + AGE + DISPOSIT + XFOLSOR * XCRHISSR + DISTRICT +
-              MONCIRC + MONSEX + YEAR + as.factor(MONRACE), data_bind)
+race.lm <- lm(TOTPRISN + XFOLSOR * XCRHISSR ~ + AGE + DISTRICT + DISPOSIT + as.factor(EDUCATN) +
+              MONCIRC + as.factor(MONSEX) + YEAR + as.factor(MONRACE), data_bind)
 summary(race.lm)
 # export data to the variable data folder
   
@@ -362,4 +658,5 @@ write.csv(data_2013, "clean_data/variable_data/2013.csv")
 write.csv(data_2014, "clean_data/variable_data/2014.csv")
 write.csv(data_2015, "clean_data/variable_data/2015.csv")
 
+# anime package - ad hoc
 
