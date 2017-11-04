@@ -751,11 +751,21 @@ table(data_bind$MONRACE)
 table(data_bind$EDUCATN)
 table(data_bind$DISPOSIT)
 
+# I made a mistake with race, changing the levels starting with 0, also reordering some factors
 data_bind$MONRACE <- factor(data_bind$MONRACE, levels = c("1", "2", "3", "4", "5"))
-data_bind$EDUCATN <- factor(data_bind$EDUCATN, levels = c("1", "2", "3", "4", "5"))
+data_bind$MONRACE <- fct_recode(data_bind$MONRACE, 
+                                "0" = "1",
+                                "1" = "2",
+                                "2" = "3",
+                                "3" = "4",
+                                "4" = "5")
+
+data_bind$EDUCATN <- factor(data_bind$EDUCATN, levels = c("0", "1", "2", "3", "4", "5"))
 data_bind$DISPOSIT <- factor(data_bind$DISPOSIT, levels = c("0", "1", "2"))
+
+# rename columns for binded dataset here.
 
 
 
 # write binded data to csv file.
-write.csv(data_bind, "clean_data/merged_data/data_mfcs.csv")
+write.csv(data_bind, "clean_data/merged_data/data_mfcs.csv", row.names = FALSE)
