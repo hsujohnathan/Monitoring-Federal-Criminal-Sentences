@@ -1,5 +1,6 @@
 # this file explores merging datasets in chronological order after selecting the columns and coercing calues
 library(tidyverse)
+library(readr)
 
 data_95_96 <- read.csv("clean_data/selected_data/95-96.csv")
 data_96_97 <- read.csv("clean_data/selected_data/96-97.csv")
@@ -716,6 +717,83 @@ data_2015 <- read.csv("clean_data/selected_data/2015.csv")
   data_2013$DISPOSIT <- disposit_collapse_2(data_2013)
   data_2014$DISPOSIT <- disposit_collapse_2(data_2014)
   data_2015$DISPOSIT <- disposit_collapse_2(data_2015)
+  
+# cleaning citizenship variable
+  # 1995-1996
+  data_95_96$CITIZEN <- fct_recode(data_95_96$CITIZEN, 
+                                   "1" = "United States citizen",
+                                   "2" = "Resident alien: Legal alien",
+                                   "3" = "Illegal alien",
+                                   "4" = "Not a US citizen; Alien status unknown",
+                                   NULL = "MissingIndeterminable")
+  
+  # 1996-1997
+  data_96_97$CITIZEN <- fct_recode(data_96_97$CITIZEN, 
+                                   "1" = "United States Citizen",
+                                   "2" = "Resident/Legal Alien",
+                                   "3" = "Illegal Alien",
+                                   "4" = "Not a US Citizen/Alien Status Unknown",
+                                   NULL = "Missing")
+  # 1997-1998
+  data_97_98$CITIZEN <- fct_recode(data_97_98$CITIZEN, 
+                                   "1" = "United States Citizen",
+                                   "2" = "Resident/Legal Alien",
+                                   "3" = "Illegal Alien",
+                                   "4" = "Not a US Citizen/Alien Status Unknown",
+                                   NULL = "Missing")
+  
+  # 1999
+  data_1999$CITIZEN <- fct_recode(data_1999$CITIZEN, 
+                                   "1" = "United States Citizen",
+                                   "2" = "Resident/Legal Alien",
+                                   "3" = "Illegal Alien",
+                                   "4" = "Not a US Citizen/Alien Status Unknown",
+                                   NULL = "Missing")
+  
+  # 2000
+  data_2000$CITIZEN <- fct_recode(data_2000$CITIZEN, 
+                                  "1" = "United States citzen",
+                                  "2" = "Resident/legal alien",
+                                  "3" = "Illegal alien",
+                                  "4" = "Not US citizen",
+                                  NULL = "Missing")
+  # 2001
+  data_2001$CITIZEN <- fct_recode(data_2001$CITIZEN, 
+                                  "1" = "United States Citizen",
+                                  "2" = "Resident/Legal Alien",
+                                  "3" = "Illegal Alien",
+                                  "4" = "Not a US Citizen/Alien Status Unknown",
+                                  NULL = "Missing")
+  # 2002
+  data_2002$CITIZEN <- fct_recode(data_2002$CITIZEN, 
+                                  "1" = "United States Citizen",
+                                  "2" = "Resident/Legal Alien",
+                                  "3" = "Illegal Alien",
+                                  "4" = "Not a US Citizen/Alien Status Unknown",
+                                  NULL = "Missing")
+  # 2003-2006 is good
+
+  # 2007-2015
+  
+  data_2007 <- data_2007[data_2007$CITIZEN != 5, ]
+  data_2008 <- data_2008[data_2008$CITIZEN != 5, ]
+  data_2009 <- data_2008[data_2008$CITIZEN != 5, ]
+  data_2010 <- data_2008[data_2008$CITIZEN != 5, ]
+  data_2011 <- data_2008[data_2008$CITIZEN != 5, ]
+  data_2012 <- data_2008[data_2008$CITIZEN != 5, ]
+  data_2013 <- data_2008[data_2008$CITIZEN != 5, ]
+  data_2014 <- data_2008[data_2008$CITIZEN != 5, ]
+  data_2015 <- data_2008[data_2008$CITIZEN != 5, ]
+
+  # coercing 1995-2002
+  
+  data_95_96$CITIZEN <- as.numeric(paste(data_95_96$CITIZEN))
+  data_96_97$CITIZEN <- as.numeric(paste(data_96_97$CITIZEN))
+  data_97_98$CITIZEN <- as.numeric(paste(data_97_98$CITIZEN))
+  data_1999$CITIZEN <- as.numeric(paste(data_1999$CITIZEN))
+  data_2000$CITIZEN <- as.numeric(paste(data_2000$CITIZEN))
+  data_2001$CITIZEN <- as.numeric(paste(data_2001$CITIZEN))
+  data_2002$CITIZEN <- as.numeric(paste(data_2002$CITIZEN))
   
 # saving data to numbered data
   write_csv(data_95_96, "clean_data/collapsed_data/95-96.csv")
