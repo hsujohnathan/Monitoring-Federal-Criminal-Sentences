@@ -777,13 +777,13 @@ data_2015 <- read.csv("clean_data/selected_data/2015.csv")
   
   data_2007 <- data_2007[data_2007$CITIZEN != 5, ]
   data_2008 <- data_2008[data_2008$CITIZEN != 5, ]
-  data_2009 <- data_2008[data_2008$CITIZEN != 5, ]
-  data_2010 <- data_2008[data_2008$CITIZEN != 5, ]
-  data_2011 <- data_2008[data_2008$CITIZEN != 5, ]
-  data_2012 <- data_2008[data_2008$CITIZEN != 5, ]
-  data_2013 <- data_2008[data_2008$CITIZEN != 5, ]
-  data_2014 <- data_2008[data_2008$CITIZEN != 5, ]
-  data_2015 <- data_2008[data_2008$CITIZEN != 5, ]
+  data_2009 <- data_2009[data_2008$CITIZEN != 5, ]
+  data_2010 <- data_2010[data_2008$CITIZEN != 5, ]
+  data_2011 <- data_2011[data_2008$CITIZEN != 5, ]
+  data_2012 <- data_2012[data_2008$CITIZEN != 5, ]
+  data_2013 <- data_2013[data_2008$CITIZEN != 5, ]
+  data_2014 <- data_2014[data_2008$CITIZEN != 5, ]
+  data_2015 <- data_2015[data_2008$CITIZEN != 5, ]
 
   # coercing 1995-2002
   
@@ -796,9 +796,9 @@ data_2015 <- read.csv("clean_data/selected_data/2015.csv")
   data_2002$CITIZEN <- as.numeric(paste(data_2002$CITIZEN))
   
 # saving data to numbered data
-  write_csv(data_95_96, "clean_data/collapsed_data/95-96.csv")
-  write_csv(data_96_97, "clean_data/collapsed_data/96-97.csv")
-  write_csv(data_97_98, "clean_data/collapsed_data/97-98.csv")
+  write_csv(data_95_96, "clean_data/collapsed_data/1996.csv")
+  write_csv(data_96_97, "clean_data/collapsed_data/1997.csv")
+  write_csv(data_97_98, "clean_data/collapsed_data/1998.csv")
   write_csv(data_1999, "clean_data/collapsed_data/1999.csv")
   write_csv(data_2000, "clean_data/collapsed_data/2000.csv")
   write_csv(data_2001, "clean_data/collapsed_data/2001.csv")

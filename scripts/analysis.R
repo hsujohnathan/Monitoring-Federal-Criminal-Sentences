@@ -14,7 +14,7 @@ data_prebooker <- data_95_15 %>%
   filter(DISTRICT == 77) 
 
 data_postbooker <- data_95_15 %>%
- filter(YEAR >= 2005) %>%
+ filter(YEAR > 2005) %>%
  filter(TOTPRISN < 500) %>%
  filter(DISTRICT == 77)
 
@@ -46,10 +46,11 @@ plot <- plot_ly(data_77, x = ~XFOLSOR, y = ~XCRHISSR, z = ~TOTPRISN,
                       zaxis = list(title = 'Prison time')))
 chart_link = plotly_POST(plot, filename="2015 Western Washington", sharing = "public")
 
-plot
+
 data_95_15_1 <- data_95_15
 
-ggplot(data_95_15_1, aes(XFOLSOR,TOTPRISN)) + geom_point(colour = "black")
+ggplot(data_prebooker, aes(log(XFOLSOR * XCRHISSR),log(TOTPRISN))) + geom_point(colour = "black") + geom_smooth(method='lm')
+
 
 hist(data_95_15_1$TOTPRISN)
 hist(data_95_15_2$TOTPRISN)
