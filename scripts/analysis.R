@@ -1,34 +1,28 @@
 Sys.setenv("plotly_username"="hsujohnathan")
 Sys.setenv("plotly_api_key"="2cplPJMsNigBrscG9P1a")
 
-install.packages("openssl")
 library(readr)
 library(ggplot2)
 library(plotly)
 library(tidyverse)
-data_95_15 <- read_csv("clean_data/merged_data/95-15.csv")
+data <- read_csv("clean_data/merged_data/96-15.csv")
 
-data_prebooker <- data_95_15 %>%
-  filter(YEAR < 2005) %>%
-  filter(TOTPRISN < 500) %>%
-  filter(DISTRICT == 77) 
+data <- data %>%
+  filter(YEAR != 2005)
 
-data_postbooker <- data_95_15 %>%
- filter(YEAR > 2005) %>%
- filter(TOTPRISN < 500) %>%
- filter(DISTRICT == 77)
+data_postbooker_2006 <- data %>%
+  filter(YEAR >= 2006) 
+
+data$booker <- as.numeric(data$YEAR >= 2005)
+
+table(data$DISTRICT)
+
+booker <- lm(data = data, TOTPRISN ~ as.factor(booker) + as.factor(DISTRICT) + XFOLSOR * XCRHISSR + as.factor(CITIZEN) * as.factor(booker) + as.factor(MONSEX) + as.factor(MONRACE) * as.factor(booker) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT))
+
+postbooker <- lm(data = data_postbooker, TOTPRISN ~ YEAR + as.factor(booker) + as.factor(MONCIRC) + DISTRICT + XFOLSOR * XCRHISSR + as.factor(CITIZEN) + as.factor(MONSEX) + as.factor(MONRACE) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT))
 
 
-
-data_68 <- data_95_15 %>%
-  filter(YEAR > 2010) %>%
-  filter(TOTPRISN < 500) %>%
-  filter(DISTRICT == 68)
-
-prebooker <- lm(data = data_prebooker, TOTPRISN ~ XFOLSOR * XCRHISSR + as.factor(CITIZEN) + as.factor(MONRACE) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT))
-postbooker <- lm(data = data_postbooker, TOTPRISN ~ XFOLSOR * XCRHISSR + as.factor(CITIZEN) + as.factor(MONRACE) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT))
-
-summary(prebooker)
+summary(booker)
 summary(postbooker)
 ggplot(data = data_68, aes(y = TOTPRISN, x = XFOLSOR * XCRHISSR)) +  geom_smooth(method = "loess", size = 0.5)
 
