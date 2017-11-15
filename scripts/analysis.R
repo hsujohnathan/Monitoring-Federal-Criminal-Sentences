@@ -17,7 +17,7 @@ data$booker <- as.numeric(data$YEAR >= 2005)
 
 table(data$DISTRICT)
 
-booker <- lm(data = data, TOTPRISN ~ as.factor(booker) + as.factor(DISTRICT) + XFOLSOR * XCRHISSR + as.factor(CITIZEN) * as.factor(booker) + as.factor(MONSEX) + as.factor(MONRACE) * as.factor(booker) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT))
+booker <- lm(data = data, TOTPRISN ~ as.factor(booker) + as.factor(MONCIRC) + XFOLSOR * XCRHISSR + as.factor(booker) * XFOLSOR + as.factor(CITIZEN) * as.factor(booker) + as.factor(MONSEX) + as.factor(MONRACE) * as.factor(booker) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT))
 
 postbooker <- lm(data = data_postbooker, TOTPRISN ~ YEAR + as.factor(booker) + as.factor(MONCIRC) + DISTRICT + XFOLSOR * XCRHISSR + as.factor(CITIZEN) + as.factor(MONSEX) + as.factor(MONRACE) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT))
 

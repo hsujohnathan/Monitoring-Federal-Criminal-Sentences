@@ -15,6 +15,7 @@ Complete the following exercises below. Knit together the PDF document and commi
 I chose the stata theme because I the loess curve is what I want to show. There are significant differences before and after US v. Booker in 2005
 ```{r}
 # library and data importing
+library(extrafont)
 library(ggplot2)
 library(readr)
 library(tidyverse)
@@ -83,7 +84,7 @@ Done above with stata. I'll change it on my own below to make manual modificatio
 
 ```{r}
 # creating theme
-mytheme <- theme(text = element_text(colour = "red1"),
+mytheme <- theme(text = element_text(family = "serif", colour = "red1"),
                  plot.background = element_rect(fill = "oldlace"), 
                  legend.background = element_rect(colour = "black"),
                  legend.position = "bottom",
