@@ -1,30 +1,36 @@
 Sys.setenv("plotly_username"="hsujohnathan")
 Sys.setenv("plotly_api_key"="2cplPJMsNigBrscG9P1a")
 
+install.packages("plotly")
 library(readr)
 library(ggplot2)
 library(plotly)
 library(tidyverse)
-data <- read_csv("clean_data/merged_data/96-15.csv")
+data <- read.csv("clean_data/merged_data/96-15.csv")
+table(data$TYPE)
 
-data <- data %>%
-  filter(YEAR != 2005)
+data_2race <- data %>%
+  filter(MONRACE <= 2)
 
-data_postbooker_2006 <- data %>%
-  filter(YEAR >= 2006) 
+type <- lm(data = data_2race, TOTPRISN ~
+               as.factor(MONCIRC) +
+               as.factor(DISPOSIT) + 
+               as.factor(MONSEX) +
+               as.factor(EDUCATN) +
+               XFOLSOR * XCRHISSR +
+               as.factor(CITIZEN) +
+               as.factor(MONRACE) +
+               as.factor(TYPE) +
+               as.factor(TYPE) * as.factor(MONRACE) +
+               AGE)
 
-data$booker <- as.numeric(data$YEAR >= 2005)
+summary(type)
 
-table(data$DISTRICT)
+data_2race <- data %>%
+  filter(MONRACE <= 2)
 
-booker <- lm(data = data, TOTPRISN ~ as.factor(booker) + as.factor(MONCIRC) + XFOLSOR * XCRHISSR + as.factor(booker) * XFOLSOR + as.factor(CITIZEN) * as.factor(booker) + as.factor(MONSEX) + as.factor(MONRACE) * as.factor(booker) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT))
+data_sample <- sample_n(data_2race, 100000)
 
-postbooker <- lm(data = data_postbooker, TOTPRISN ~ YEAR + as.factor(booker) + as.factor(MONCIRC) + DISTRICT + XFOLSOR * XCRHISSR + as.factor(CITIZEN) + as.factor(MONSEX) + as.factor(MONRACE) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT))
-
-
-summary(booker)
-summary(postbooker)
-ggplot(data = data_68, aes(y = TOTPRISN, x = XFOLSOR * XCRHISSR)) +  geom_smooth(method = "loess", size = 0.5)
 
 
 race_77 <- lm(TOTPRISN ~ as.factor(MONSEX) + as.factor(MONRACE) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT) + XFOLSOR, data)
@@ -32,21 +38,15 @@ race_77 <- lm(TOTPRISN ~ as.factor(MONSEX) + as.factor(MONRACE) + as.factor(EDUC
 race_68 <- lm(log(TOTPRISN) ~ as.factor(MONSEX) + as.factor(MONRACE) + as.factor(EDUCATN) + AGE + as.factor(DISPOSIT) + XFOLSOR, data_68)
 plot(data_77$TOTPRISN, data_77$XFOLSOR) + geom_ab
 
-plot <- plot_ly(data_77, x = ~XFOLSOR, y = ~XCRHISSR, z = ~TOTPRISN,
-                color = ~MONRACE, colors = c('#BF382A', '#0C4B8E', '#FFE1A1')) %>%
+plot <- plot_ly(data_sample, x = ~TYPE, y = ~XFOLSOR, z = ~XFOLSOR, frame = ~DISTRICT,
+                marker = list(color = ~TOTPRISN, colorscale = c("red", "blue"), showscale = TRUE)) %>%
   add_markers() %>%
-  layout(scene = list(xaxis = list(title = 'Offense Level'),
-                      yaxis = list(title = 'History'),
-                      zaxis = list(title = 'Prison time')))
+  layout(scene = list(xaxis = list(title = 'Criminal History'),
+                      yaxis = list(title = 'Final Offense Level')))
+         
 chart_link = plotly_POST(plot, filename="2015 Western Washington", sharing = "public")
 
+plot
 
-data_95_15_1 <- data_95_15
-
-ggplot(data_prebooker, aes(log(XFOLSOR * XCRHISSR),log(TOTPRISN))) + geom_point(colour = "black") + geom_smooth(method='lm')
-
-
-hist(data_95_15_1$TOTPRISN)
-hist(data_95_15_2$TOTPRISN)
 
 summary(data_95_15_1$TOTPRISN)

@@ -1,5 +1,6 @@
 # read in collapsed and clean data
 library(dplyr)
+library(tidyverse)
 data_95_96 <- read_csv("clean_data/collapsed_data/1996.csv")
 data_96_97 <- read_csv("clean_data/collapsed_data/1997.csv")
 data_97_98 <- read_csv("clean_data/collapsed_data/1998.csv")
@@ -32,4 +33,13 @@ data_bind <- data_bind %>%
   filter(TOTPRISN < 1000) %>%
   filter(XCRHISSR < 9)
 
+data_bind <- data_bind[, -17]
+
+#data <- tbl_df(data)
+#distrct_size <- table(data)
+#district_size$DISTRICT <- as.numeric(district_size$DISTRICT)
+#colnames(district_size) <- c("DISTRICT", "frequency")
+#data2 <- left_join(data, district_size, by = "DISTRICT")
+
 write_csv(data_bind, "clean_data/merged_data/96-15.csv")
+

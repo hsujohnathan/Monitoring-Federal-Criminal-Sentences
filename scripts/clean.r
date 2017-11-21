@@ -666,11 +666,6 @@ data_2015 <- read.csv("clean_data/selected_data/2015.csv")
   table(data_2004$DISPOSIT)
   table(data_2005$DISPOSIT)
   table(data_2006$DISPOSIT)
-  
-  data_list <- list(data_2003,
-                    data_2004,
-                    data_2005,
-                    data_2006)
 
   disposit_collapse_1 <- function(data) {
   data$DISPOSIT <- fct_recode(data$DISPOSIT, 
@@ -794,6 +789,186 @@ data_2015 <- read.csv("clean_data/selected_data/2015.csv")
   data_2000$CITIZEN <- as.numeric(paste(data_2000$CITIZEN))
   data_2001$CITIZEN <- as.numeric(paste(data_2001$CITIZEN))
   data_2002$CITIZEN <- as.numeric(paste(data_2002$CITIZEN))
+
+# collapsing offensetype variable to drug and other crimes.
+  
+  # 95_96
+  data_96_97$OFFTYPE <- as.numeric(data_96_97$OFFTYPE)
+  data_97_98$OFFTYPE <- as.numeric(data_97_98$OFFTYPE)
+
+  
+  offtype_recode1 <- function(data) {
+    data$TYPE <- fct_recode(as.factor(data$OFFTYPE), 
+                            "4" = "1",
+                            "4" = "2",
+                            "4" = "3",
+                            "4" = "4",
+                            "4" = "5",
+                            "4" = "6",
+                            "1" = "10",
+                            "1" = "11",
+                            "1" = "12",
+                            "1" = "37",
+                            "2" = "13",
+                            "2" = "14", 
+                            "3" = "27")
+  }
+  
+  data_95_96$TYPE <- offtype_recode1(data_95_96)
+  data_95_96$TYPE <- as.numeric(paste(data_95_96$TYPE))
+  data_95_96$TYPE[data_95_96$TYPE > 4] <- 0
+  table(data_95_96$TYPE)
+  
+  
+  
+  # 1997-2015A
+  offtype_recode2 <- function(data) {
+    data$OFFTYPE2 <- as.numeric(data$OFFTYPE2)
+    data$TYPE <- fct_recode(as.factor(data$OFFTYPE2), 
+                            "4" = "4",
+                            "4" = "25",
+                            "4" = "23",
+                            "4" = "21",
+                            "4" = "6",
+                            "4" = "30",
+                            "1" = "10",
+                            "1" = "11",
+                            "1" = "12",
+                            "1" = "37",
+                            "2" = "15", 
+                            "3" = "20")
+  }
+  
+  data_96_97$TYPE <- offtype_recode2(data_96_97)
+  data_96_97$TYPE <- as.numeric((data_96_97$TYPE))
+  data_96_97$TYPE[data_96_97$TYPE > 4] <- 0  
+  table(data_96_97$TYPE)
+  
+  data_97_98$TYPE <- offtype_recode2(data_97_98)
+  data_97_98$TYPE <- as.numeric((data_97_98$TYPE))
+  data_97_98$TYPE[data_97_98$TYPE > 4] <- 0  
+  table(data_97_98$TYPE)
+  
+  data_1999$TYPE <- offtype_recode2(data_1999)
+  data_1999$TYPE <- as.numeric((data_1999$TYPE))
+  data_1999$TYPE[data_1999$TYPE > 4] <- 0  
+
+  data_2000$TYPE <- offtype_recode2(data_2000)
+  data_2000$TYPE <- as.numeric((data_2000$TYPE))
+  data_2000$TYPE[data_2000$TYPE > 4] <- 0  
+  table(data_2000$TYPE)
+
+  data_2001$TYPE <- offtype_recode2(data_2001)
+  data_2001$TYPE <- as.numeric((data_2001$TYPE))
+  data_2001$TYPE[data_2001$TYPE > 4] <- 0  
+  table(data_2001$TYPE)  
+  
+  data_2002$TYPE <- offtype_recode2(data_2002)
+  data_2002$TYPE <- as.numeric((data_2002$TYPE))
+  data_2002$TYPE[data_2002$TYPE > 4] <- 0  
+  table(data_2002$TYPE)  
+  
+  offtype_recode3 <- function(data) {
+    data$TYPE <- fct_recode(as.factor(data$OFFTYPE), 
+                            "4" = "1",
+                            "4" = "2",
+                            "4" = "3",
+                            "4" = "4",
+                            "4" = "5",
+                            "4" = "6",
+                            "1" = "10",
+                            "1" = "11",
+                            "1" = "12",
+                            "1" = "37",
+                            "2" = "13",
+                            "3" = "27")
+  }
+  
+  data_2003$TYPE <- offtype_recode3(data_2003)
+  data_2003$TYPE <- as.numeric(paste(data_2003$TYPE))
+  data_2003$TYPE[data_2003$TYPE > 4] <- 0  
+  table(data_2003$TYPE)  
+  
+  data_2004$TYPE <- offtype_recode3(data_2004)
+  data_2004$TYPE <- as.numeric(paste(data_2004$TYPE))
+  data_2004$TYPE[data_2004$TYPE > 4] <- 0  
+  table(data_2004$TYPE) 
+  
+  data_2005$TYPE <- offtype_recode3(data_2005)
+  data_2005$TYPE <- as.numeric(paste(data_2005$TYPE))
+  data_2005$TYPE[data_2005$TYPE > 4] <- 0  
+  table(data_2005$TYPE) 
+  
+  data_2006$TYPE <- offtype_recode3(data_2006)
+  data_2006$TYPE <- as.numeric(paste(data_2006$TYPE))
+  data_2006$TYPE[data_2006$TYPE > 4] <- 0  
+  table(data_2006$TYPE) 
+  
+  data_2007$TYPE <- offtype_recode3(data_2007)
+  data_2007$TYPE <- as.numeric(paste(data_2007$TYPE))
+  data_2007$TYPE[data_2007$TYPE > 4] <- 0  
+  table(data_2007$TYPE) 
+  
+  data_2008$TYPE <- offtype_recode3(data_2008)
+  data_2008$TYPE <- as.numeric(paste(data_2008$TYPE))
+  data_2008$TYPE[data_2008$TYPE > 4] <- 0  
+  table(data_2008$TYPE) 
+  
+  data_2009$TYPE <- offtype_recode3(data_2009)
+  data_2009$TYPE <- as.numeric(paste(data_2009$TYPE))
+  data_2009$TYPE[data_2009$TYPE > 4] <- 0  
+  table(data_2009$TYPE) 
+  
+  data_2010$TYPE <- offtype_recode3(data_2010)
+  data_2010$TYPE <- as.numeric(paste(data_2010$TYPE))
+  data_2010$TYPE[data_2010$TYPE > 4] <- 0  
+  table(data_2010$TYPE) 
+  
+  data_2011$TYPE <- offtype_recode3(data_2011)
+  data_2011$TYPE <- as.numeric(paste(data_2011$TYPE))
+  data_2011$TYPE[data_2011$TYPE > 4] <- 0  
+  table(data_2011$TYPE) 
+  
+  data_2012$TYPE <- offtype_recode3(data_2012)
+  data_2012$TYPE <- as.numeric(paste(data_2012$TYPE))
+  data_2012$TYPE[data_2012$TYPE > 4] <- 0  
+  table(data_2012$TYPE) 
+  
+  data_2013$TYPE <- offtype_recode3(data_2013)
+  data_2013$TYPE <- as.numeric(paste(data_2013$TYPE))
+  data_2013$TYPE[data_2013$TYPE > 4] <- 0  
+  table(data_2013$TYPE) 
+  
+  data_2014$TYPE <- offtype_recode3(data_2014)
+  data_2014$TYPE <- as.numeric(paste(data_2014$TYPE))
+  data_2014$TYPE[data_2014$TYPE > 4] <- 0  
+  table(data_2014$TYPE) 
+  
+  data_2015$TYPE <- offtype_recode3(data_2015)
+  data_2015$TYPE <- as.numeric(paste(data_2015$TYPE))
+  data_2015$TYPE[data_2015$TYPE > 4] <- 0  
+  table(data_2015$TYPE) 
+
+data_95_96 <- data_95_96[, -8]
+data_96_97 <- data_96_97[, -8]
+data_97_98 <- data_97_98[, -8]
+data_1999 <- data_1999[, -8]
+data_2000 <- data_2000[, -8]
+data_2001 <- data_2001[, -8]
+data_2002 <- data_2002[, -8]
+data_2003 <- data_2003[, -8]
+data_2004 <- data_2004[, -8]
+data_2005 <- data_2005[, -8]
+data_2006 <- data_2006[, -8]
+data_2007 <- data_2007[, -8]
+data_2008 <- data_2008[, -8]
+data_2009 <- data_2009[, -8]
+data_2010 <- data_2010[, -8]
+data_2011 <- data_2011[, -8]
+data_2012 <- data_2012[, -8]
+data_2013 <- data_2013[, -8] 
+data_2014 <- data_2014[, -8]
+data_2015 <- data_2015[, -8] 
   
 # saving data to numbered data
   write_csv(data_95_96, "clean_data/collapsed_data/1996.csv")
