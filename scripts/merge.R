@@ -30,8 +30,9 @@ data_bind <- bind_rows(data_95_96, data_96_97, data_97_98, data_1999,
                        data_2012, data_2013, data_2014, data_2015)
 
 data_bind <- data_bind %>% 
-  filter(TOTPRISN < 1000) %>%
-  filter(XCRHISSR < 9)
+  filter(TOTPRISN < 1000)
+  filter(XCRHISSR <= 6)
+
 
 data_bind <- data_bind[, -17]
 
@@ -42,4 +43,3 @@ data_bind <- data_bind[, -17]
 #data2 <- left_join(data, district_size, by = "DISTRICT")
 
 write_csv(data_bind, "clean_data/merged_data/96-15.csv")
-
