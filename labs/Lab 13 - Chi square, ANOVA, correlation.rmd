@@ -91,13 +91,14 @@ continuous <- data %>%
 
 
 
-# creating lm for the 2.
+# finding if the two variables are correlated
+cor(continuous$TOTPRISN, continuous$STATMAX)
 
-prison_statmax <- (lm(TOTPRISN ~ STATMAX, data = continuous))
-summary(prison_statmax)
 ```
 
   a. What is the correlation between these two variables? 
+  
+  There is a 0.423 correlation between prison time and statutroy maximum. 
   
   There is a weak but significant correlation between statutory max and total prison sentenced (beta = 0.1, and p < 0.001!)
 
