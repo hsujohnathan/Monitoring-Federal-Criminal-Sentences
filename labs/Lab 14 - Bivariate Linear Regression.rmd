@@ -1,0 +1,80 @@
+---
+title: "Lab 14 - Bivariate Regression & Interpretation"
+author: "Your name here"
+date: "November 28, 2017"
+output:
+  pdf_document: 
+    latex_engine: xelatex
+  html_document: default
+---
+
+Complete the following exercises below and include all code used to find the answers. Knit together the PDF document and commit both the Lab 14 RMD file and the PDF document to Git. Push the changes to GitHub so both documents are visible in your public GitHub repository.
+
+**1. Select the main focal relationship you're interested in exploring for your poster project.**
+
+  a. Describe the response variable and the explanatory variable and the theoretical relationship you believe exists between these two variables. 
+  
+  I believe that the seriousness of the offense correlates with the punishment of individuals.
+  
+  b. Conduct a simple (bivariate) linear regression on your focal relationship and save the model object. Print out the full results by calling `summary()` on your model object. 
+  
+```{r}
+library(lm.beta)
+# read in data
+data <- read.csv("~/monitoring-federal-criminal-sentences/clean_data/merged_data/96-15.csv")
+
+a <- lm(data = data, TOTPRISN ~ XFOLSOR)
+summary(a)
+lm.beta(a)
+
+```
+  c. What is the direction, magnitude, and statistical significance of the bivariate association between the explanatory and response variables.
+  
+  The seriousness of the crime has a p value of 0, and a positive 5.23 slope. Beta is .736, which is pretty positively strong.
+  
+  d. What is the meaning of the model intercept?
+  
+  For every 1 level of increase, the defendant receives on average of 5.23 extra months in sentence length
+  
+  e. How well does the bivariate model fit the data? How is this information calculated?
+  
+  The multiple r-squared is 0.542, which is pretty good, this is calculated by the sd and how well it fits the line. 
+  
+  f. Is the observed association between the independent variable and dependent variable consistent with your hypothesis? Why or why not?
+  
+  The association is consistent with my hypothesis becauase you expect more severe punishment with more serious crimes commited by the individual. 
+  
+**2. Select a different focal relationship related to your project. This could be:**
+
+* **A different response and a different explanatory variable**
+
+* **A different response and the same explanatory variable**
+
+* **The same response and a different explanatory variable**
+
+  a. Describe the response variable and the explanatory variable and the theoretical relationship you believe exists between these two variables. 
+  
+  I believe that the severity of the crime committed by the defendant has to do with the the type of the crime.
+  
+  b. Conduct a simple (bivariate) linear regression on your focal relationship and save the model object. Print out the full results by calling `summary()` on your model object. 
+  
+```{r}
+  b <- lm(data = data, XFOLSOR ~ factor(TYPE))
+  summary(b)
+  lm.beta(b)
+```
+  c. What is the direction, magnitude, and statistical significance of the bivariate association between the explanatory and response variables. 
+  
+  Drug crimes, gun violence, and violent crime are positive, whereas immigration is slightly negative but weak. However, they are all significant. 
+  
+  d. What is the meaning of the model intercept?
+  
+  The model's intercept means that all crimes has an offense level of 15. 
+  
+  e. How well does the bivariate model fit the data? How is this information calculated?
+  
+  The multiple r-squared is 0.2939. Which means that the model explains 29.4% of the variability, not too bad for 1 single dependent variable.
+  
+  f. Is the observed association between the independent variable and dependent variable consistent with your hypothesis? Why or why not?
+  
+  No, it is so hard to determine what type of crime is more severe than the other, but this gives us a good indication of what our institution think of different types of crimes.
