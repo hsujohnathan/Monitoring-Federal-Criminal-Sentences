@@ -1,0 +1,127 @@
+---
+title: "Lab 15 - Multivariate Regression & Interpretation"
+author: "Your name here"
+date: "November 30, 2017"
+output:
+  pdf_document: 
+    latex_engine: xelatex
+  html_document: default
+---
+
+Complete the following exercises below and include all code used to find the answers. Knit together the PDF document and commit both the Lab 15 RMD file and the PDF document to Git. Push the changes to GitHub so both documents are visible in your public GitHub repository.
+
+**1. Select a second explanatory variable from your dataset that you think has implications for the theoretical association of your focal relationship.**
+
+a. Describe the theoretical reasoning for selecting this variable.
+
+The reason why I think the type of the crime also has a theoretical relationship with the total prison length is the amount of stereotyping in policing. Meaning that LE is more likely to police blacks.
+
+b. What type of relationship do you think this variable has with your focal variables? Given that, what do you expect to happen to your focal relationship when it is added to the model?
+
+I think this variable has a confounding relationship with my race variable is because while this variable may increase minority in the CJS, certain types of crimes may also increase the sentence severity more than others.
+
+c. Is it a continuous or categorical variable? What implications does this have for a multivariate regression equation?
+
+This is a categorical variable. This affects the multivariate regression by having many different parameters, instead of just one for each variable.  
+
+d. Conduct a multivariate linear regression with this additional explanatory variable and save the model object. Print out the full results by calling `summary()` on your model object.
+
+```{r}
+library(tidyverse)
+
+# importing data
+data <- read.csv("~/monitoring-federal-criminal-sentences/clean_data/merged_data/96-15.csv")
+
+# only comparing blacks and whites and prison length less than 700 (dp and lwp above that so excluding those observations)
+data2 <- data %>%
+  filter(MONRACE <= 2) %>%
+  filter(TOTPRISN <= 700)
+
+race <- lm(TOTPRISN ~ factor(MONRACE), data2)
+summary(race)
+crime_race <- lm(TOTPRISN ~ factor(MONRACE) + factor(TYPE), data2)
+summary(crime_race)
+```
+
+e. Describe the results of the multivariate analysis, highlighting:
+* the apparent association between the control variable and the focal response variable
+* how the focal association changed when you incorporatedthe control variable
+* the implications of these results for your focal association
+
+The association between race (the main variable) and the tpe of the crime is quite significant. Blacks in general receive harsher sentences (20+ compared to whites), and drug crimes (type 1) receives an additional 41 months worth of imprisonment on average! 
+
+When I included the control - the correlation between blacks and sentence length became slightly weeker, and went to drug crimes. Blacks are still very signifciant. 
+
+This tells me that crime type is important to account for in future models, and lumping data is not a good idea in case of crime types.
+
+f. How well does this model fit the data? Is it an improvement over the bivariate model? Why or why not?
+
+This is not a improvement over my bivariate data because it has a weak r-squared, and lots of bad residuals at the tail end. 
+
+**2. Select any additional variables you want to incorporate into your final model. For each additional variable added to the model answer the following questions:**
+
+```{r}
+library(tidyverse)
+
+race_type_interaction <- lm(TOTPRISN ~ factor(MONRACE) + factor(TYPE) + XCRHISSR + XFOLSOR, data2)
+summary(race_type_interaction)
+  
+```
+
+a. Describe the theoretical reasoning for selecting this variable.
+
+Selecting both the criminal history and severity of the crime will help us dig deeper into the granularity of the type of the crime and the outcome of the punishment.
+
+b. What type of relationship do you think this variable has with your focal variables? Given that, what do you expect to happen to your focal relationship when it is added to the model?
+
+These variables have a intervening relationship with my focal variable. I expect it to make the race and type variables weaker.
+
+c. Is it a continuous or categorical variable? What implications does this have for a multivariate regression equation?
+
+These are continuous variables. This just means that we have really granular data and it only counts for 1 linear paramter!
+
+d. Conduct a multivariate linear regression by adding one explanatory variable at a time and save the model objects. Print out the full results by calling `summary()` on each model object.
+
+```{r}
+library(tidyverse)
+# only comparing blacks and whites and prison length less than 700 (dp and lwp above that so excluding those observations), people with a college degree and above are also too small of a sample size for us to include the variance. 
+data2 <- data %>%
+  filter(MONRACE <= 2) %>%
+  filter(TOTPRISN <= 700) %>%
+  filter(EDUCATN < 3)
+
+race_type_interaction <- lm(TOTPRISN ~ factor(MONRACE):YEAR + factor(MONRACE) + factor(TYPE) + XCRHISSR + XFOLSOR, data2)
+summary(race_type_interaction)
+
+library(ggplot2)
+
+  
+```
+
+e. Describe the results of the multivariate analysis, highlighting:
+* the apparent association between each additional control variable and the focal response variable
+* how the focal association changed when you incorporated each control variable
+* the implications of these results for your focal association
+
+This is weird - accounting for XCRHISSR and XFOLSOR - drug crimes actually receive less prison time. 
+The focal (race) did become weaker after including these two variables. 
+This also means that the severity of the crime and the history of the individual plays a larger role in sentencing.
+
+f. How well does the full (all explanatory variables included) model fit? Are any of the other models you ran a better fit? Explain how you came to the conclusion you did. 
+
+I think no matter what I add - they will be significant and relatively strong. Perhaps I should consider keeping this data, and subsetting data to more disadvantaged individuals and go from there. 
+
+g. Select the model that you think best fits the data. Provide a brief synopsis of the analysis of your data using this model and describe the implications for the theoretical arguments you set out to test.
+
+```{r}
+final <- glm(TOTPRISN + XFOLSOR ~ factor(MONRACE) + 
+                                 factor(TYPE) +
+                                 factor(EDUCATN)+
+                                 AGE:factor(MONRACE) +
+                                 YEAR + 
+                                 XCRHISSR,
+                                 data = data2,
+                                 family = "poisson")
+summary(final)
+```
+Blacks receive on average of 0.47 additonal months compared to whites. Drug, gun, and violent crime all receive higher sentences (by .5-.7 months) than other and immigration crimes. Education has a weak correlation with the outcome of the sentencing below college graduate level (Beta is small). There is a slight downward trend in crime severity in the recent 2 decades. And white people are more likely than blacks to commit more crime as they get older.
