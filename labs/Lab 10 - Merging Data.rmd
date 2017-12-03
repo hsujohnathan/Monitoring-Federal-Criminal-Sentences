@@ -36,9 +36,9 @@ library(readr)
 # read in data
 setwd("~/monitoring-federal-criminal-sentences")
 data <- read_csv("clean_data/collapsed_data/95-96.csv")
-
+data <- as_tibble(data)
 # Spliting data into to 2 parts
-tibble_data <- tbl_df(data)
+tibble_data <- as_tibble(data)
 data_1 <- tibble_data[, 1:5]
 data_2 <- tibble_data[, 6:10]
 names <- data$USSCIDN
@@ -46,30 +46,30 @@ data_1 <- cbind(names, data_1)
 data_2 <- cbind(names, data_2)
 
 # left_join 
-left_join(data_1, data_2, by = "names")
+head(left_join(data_1, data_2, by = "names"))
 
 # right_join
-right_join(data_1, data_2, by = "names")
+head(right_join(data_1, data_2, by = "names"))
 
 # inner_join (simulated by taking out case number 246845)
 data_3 <- data_1 %>%
   filter(names != "246845")
 
-inner_join(data_3, data_2)
+head(inner_join(data_3, data_2))
 
-# full_join - we see that the missing variables for Datsun is last.
-full_join(data_3, data_2)
+# full_join - we see that the missing variables for 246845 is last.
+head(full_join(data_3, data_2))
 ```
 
 5. Do the same thing with the filtering joins. What was the result? Give an example of a case in which a `semi_join()` or an `anti_join()` might be used with your primary dataset.
 
 ```{r}
 # we see that semi_join excludes 246845
-semi_join(data_3, data_2, "names")
+head(semi_join(data_3, data_2, "names"))
 
 
 # we see that 246845 is the exception
-anti_join(data_2, data_3, "names")
+head(anti_join(data_2, data_3, "names"))
 ```
 
 6. What happens when you apply the set operations joins to your tables? Are these functions useful for you for this project? Explain why or why not. If not, give an example in which one of them might be usefully applied to your data. 
@@ -87,7 +87,7 @@ Not applicable.
 
 8. What is the purpose of binding data and why might you need to take extra precaution when carrying out this specific form of data merging? If your data requires any binding, carry out the steps below and describe what was accomplished by your merge.
 
-# I binded the data so we can match everything by year
+I binded the data so we can match everything by year
 ```{r}
 # importing clean data
 setwd("/Users/hsujohnathan/monitoring-federal-criminal-sentences")

@@ -3,7 +3,8 @@ title: "Lab 9 - Data Transformation"
 author: "Johnathan Hsu"
 date: "November 3rd, 2017"
 output:
-  pdf_document: default
+  pdf_document: 
+    latex_engine: xelatex
   html_document: default
 ---
 
@@ -14,22 +15,19 @@ output:
   c. Find the most concise way to select the first 3 columns and the last 3 columns by name. 
 
 ```{r}
-# setting directory
-setwd("~/monitoring-federal-criminal-sentences")
-
 # package
-library(dplyr)
+library(tidyverse)
 
 # read data
-data_95_96 <- read.csv("clean_data/variable_data/95-96.csv")
+data_95_96 <- read.csv("~/monitoring-federal-criminal-sentences/clean_data/initial_data/95-96.csv")
 
 # making copy for this lab
-test <- data_95_96
-tbl_df(select(data_95_96, MONRACE, YEAR, MONSEX))
+test <- as_tibble(data_95_96)
+tbl_df(select(data_95_96, MONRACE, MONSEX, DISPOSIT))
 tbl_df(select(data_95_96, XCRHISSR, DISTRICT, MONCIRC))
 
 efficient_df <- data_95_96 %>%
-  select(MONRACE, YEAR, MONSEX, EDUCATN, XCRHISSR, DISTRICT, MONCIRC)
+  select(MONRACE, DISPOSIT, MONSEX, EDUCATN, XCRHISSR, DISTRICT, MONCIRC, STATMAX, STATMIN, TOTPRISN)
 ```
 
 
@@ -60,7 +58,13 @@ Yes - I want to find the guideline range by subtracting the statutory minimum fr
   a. Carry out any and all of the mutations you wish to perform on your dataset and print the results to the console.
 
 ```{r}
-test <- mutate(test, GUIDERANGE = STATMAX - STATMIN)
+test <- mutate(test, GUIDERANGE = as.numeric(STATMAX) - as.numeric(STATMIN))
+
+# but that won't do me any good because I need to be able to compare the sentence that I can use to reference to the range they are given. Using base R ifs here:
+
+efficient_df$DOWNADJUSTMENT <- as.numeric(as.numeric(efficient_df$STATMIN) > as.numeric(efficient_df$TOTPRISN))
+
+efficient_df$UPWARDADJUSTMENT <- as.numeric(as.numeric(efficient_df$STATMAX) < as.numeric(efficient_df$TOTPRISN))
 ```
 
 6. `R` comes with a set of logical operators that you can use inside `filter()`:
@@ -176,9 +180,7 @@ I don't think this is applicable to my data.
   a. Are there any specific transformations you want to make to your data? What are they and what aspect of your research question will they help you to answer?
   b. In a code chunk below, carry out all the data transformations you wish to perform on your data. Utilize the `%>%` operator to tie multiple commands together and make your code more readable and efficient. Remember to comment your code so it is clear why you doing things a certain way. 
   
-  They are listed above. I will apply them to the 20 years of data that I have.
-  See mutate script in my scripts folder. 
-  
+ I don't think there are any variables that can be effectively mutated and included in my model. I think the adjustment variables will be useful, however, as it speaks on discretion taken by judges at sentencing. 
   
   
   
